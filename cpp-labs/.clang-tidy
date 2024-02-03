@@ -16,7 +16,10 @@ Checks: >
   -readability-magic-numbers,
   -cppcoreguidelines-pro-type-reinterpret-cast,
   -modernize-use-using,
-  -cppcoreguidelines-avoid-magic-numbers
+  -cppcoreguidelines-avoid-magic-numbers,
+  -hicpp-explicit-conversions,
+  -google-explicit-constructor,
+  -google-runtime-int
 WarningsAsErrors: '*'
 HeaderFilterRegex: 'src/(libcsc)'
 CheckOptions:
