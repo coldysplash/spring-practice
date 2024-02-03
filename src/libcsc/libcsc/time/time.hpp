@@ -21,13 +21,15 @@ public:
   long int get_spantime() const { return span_seconds_; };
 };
 
-Time operator+(Time ltime, TimeSpan rtime);
-Time operator-(Time ltime, TimeSpan rtime);
+Time operator+(const Time &lhs, const TimeSpan &rhs);
+Time operator-(const Time &lhs, const TimeSpan &rhs);
 
-TimeSpan operator+(TimeSpan ltime, TimeSpan rtime);
-TimeSpan operator-(TimeSpan ltime, TimeSpan rtime);
-TimeSpan operator-(Time ltime, Time rtime);
+TimeSpan operator+(const TimeSpan &lhs, const TimeSpan &rhs);
+TimeSpan operator-(const TimeSpan &lhs, const TimeSpan &rhs);
+TimeSpan operator-(const Time &lhs, const Time &rhs);
 
 std::ostream &operator<<(std::ostream &os, const Time &t);
+
+// bool operator==(const Time &, const Time &);
 
 } // namespace times

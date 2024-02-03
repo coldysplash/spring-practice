@@ -4,24 +4,24 @@
 
 namespace times {
 
-Time operator+(Time ltime, TimeSpan rtime) {
-  return ltime.get_time() + rtime.get_spantime();
+Time operator+(const Time &lhs, const TimeSpan &rhs) {
+  return lhs.get_time() + rhs.get_spantime();
 }
 
-Time operator-(Time ltime, TimeSpan rtime) {
-  return ltime.get_time() - rtime.get_spantime();
+Time operator-(const Time &lhs, const TimeSpan &rhs) {
+  return lhs.get_time() - rhs.get_spantime();
 }
 
-TimeSpan operator+(TimeSpan ltime, TimeSpan rtime) {
-  return ltime.get_spantime() + rtime.get_spantime();
+TimeSpan operator+(const TimeSpan &lhs, const TimeSpan &rhs) {
+  return lhs.get_spantime() + rhs.get_spantime();
 }
 
-TimeSpan operator-(TimeSpan ltime, TimeSpan rtime) {
-  return ltime.get_spantime() - rtime.get_spantime();
+TimeSpan operator-(const TimeSpan &lhs, const TimeSpan &rhs) {
+  return lhs.get_spantime() - rhs.get_spantime();
 }
 
-TimeSpan operator-(Time ltime, Time rtime) {
-  return static_cast<long int>(ltime.get_time() - rtime.get_time());
+TimeSpan operator-(const Time &lhs, const Time &rhs) {
+  return static_cast<long int>(lhs.get_time() - rhs.get_time());
 }
 
 std::ostream &operator<<(std::ostream &os, const Time &t) {
@@ -34,5 +34,7 @@ std::ostream &operator<<(std::ostream &os, const Time &t) {
   return os << days << "d " << hours << "h " << minutes << "m " << seconds
             << "s\n";
 }
+
+// bool operator==(const Time &, const Time &) {}
 
 } // namespace times
