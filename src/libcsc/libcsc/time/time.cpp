@@ -35,6 +35,44 @@ std::ostream &operator<<(std::ostream &os, const Time &t) {
             << "s\n";
 }
 
-// bool operator==(const Time &, const Time &) {}
+/* comparison operators for class Time */
+bool operator==(const Time &lhs, const Time &rhs) {
+  return lhs.get_time() == rhs.get_time();
+}
+bool operator!=(const Time &lhs, const Time &rhs) {
+  return lhs.get_time() != rhs.get_time();
+}
+bool operator<(const Time &lhs, const Time &rhs) {
+  return lhs.get_time() < rhs.get_time();
+}
+bool operator>(const Time &lhs, const Time &rhs) {
+  return lhs.get_time() > rhs.get_time();
+}
+bool operator<=(const Time &lhs, const Time &rhs) {
+  return lhs.get_time() <= rhs.get_time();
+}
+bool operator>=(const Time &lhs, const Time &rhs) {
+  return lhs.get_time() >= rhs.get_time();
+}
+
+/* comparison operators for class TimeSpan */
+bool operator==(const TimeSpan &lhs, const TimeSpan &rhs) {
+  return lhs.get_spantime() == rhs.get_spantime();
+}
+bool operator!=(const TimeSpan &lhs, const TimeSpan &rhs) {
+  return lhs.get_spantime() != rhs.get_spantime();
+}
+bool operator<(const TimeSpan &lhs, const TimeSpan &rhs) {
+  return lhs.get_spantime() < rhs.get_spantime();
+}
+bool operator>(const TimeSpan &lhs, const TimeSpan &rhs) {
+  return lhs.get_spantime() > rhs.get_spantime();
+}
+bool operator<=(const TimeSpan &lhs, const TimeSpan &rhs) {
+  return lhs.get_spantime() <= rhs.get_spantime();
+}
+bool operator>=(const TimeSpan &lhs, const TimeSpan &rhs) {
+  return lhs.get_spantime() >= rhs.get_spantime();
+}
 
 } // namespace times

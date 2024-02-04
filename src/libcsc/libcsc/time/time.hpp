@@ -30,6 +30,18 @@ TimeSpan operator-(const Time &lhs, const Time &rhs);
 
 std::ostream &operator<<(std::ostream &os, const Time &t);
 
-// bool operator==(const Time &, const Time &);
+bool operator==(const Time &lhs, const Time &rhs);
+bool operator!=(const Time &lhs, const Time &rhs);
+bool operator<(const Time &lhs, const Time &rhs);
+bool operator>(const Time &lhs, const Time &rhs);
+bool operator<=(const Time &lhs, const Time &rhs);
+bool operator>=(const Time &lhs, const Time &rhs);
+
+bool operator==(const TimeSpan &lhs, const TimeSpan &rhs);
+bool operator!=(const TimeSpan &lhs, const TimeSpan &rhs);
+bool operator<(const TimeSpan &lhs, const TimeSpan &rhs);
+bool operator>(const TimeSpan &lhs, const TimeSpan &rhs);
+bool operator<=(const TimeSpan &lhs, const TimeSpan &rhs);
+bool operator>=(const TimeSpan &lhs, const TimeSpan &rhs);
 
 } // namespace times
