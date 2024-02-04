@@ -26,8 +26,8 @@ TimeSpan operator-(const Time &lhs, const Time &rhs) {
 
 std::ostream &operator<<(std::ostream &os, const Time &t) {
   const size_t all_secs = t.get_time();
-  const size_t days = all_secs / static_cast<size_t>((24 * 60 * 60));
-  const size_t hours = all_secs / 3600;
+  const size_t days = all_secs / static_cast<size_t>((24 * 3600));
+  const size_t hours = (all_secs / 3600) - (days * 24);
   const size_t minutes = (all_secs % 3600) / 60;
   const size_t seconds = all_secs % 60;
 
@@ -74,5 +74,14 @@ bool operator<=(const TimeSpan &lhs, const TimeSpan &rhs) {
 bool operator>=(const TimeSpan &lhs, const TimeSpan &rhs) {
   return lhs.get_spantime() >= rhs.get_spantime();
 }
+
+namespace literals {
+
+Time operator"" _d(unsigned long long days) { return {days * 24 * 3600}; }
+Time operator"" _h(unsigned long long hours) { return {hours * 3600}; }
+Time operator"" _m(unsigned long long minutes) { return {minutes * 60}; }
+Time operator"" _s(unsigned long long seconds) { return {seconds}; }
+
+} // namespace literals
 
 } // namespace times

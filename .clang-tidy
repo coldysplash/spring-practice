@@ -19,7 +19,8 @@ Checks: >
   -cppcoreguidelines-avoid-magic-numbers,
   -hicpp-explicit-conversions,
   -google-explicit-constructor,
-  -google-runtime-int
+  -google-runtime-int,
+  -google-build-using-namespace
 WarningsAsErrors: '*'
 HeaderFilterRegex: 'src/(libcsc)'
 CheckOptions:

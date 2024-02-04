@@ -44,4 +44,13 @@ bool operator>(const TimeSpan &lhs, const TimeSpan &rhs);
 bool operator<=(const TimeSpan &lhs, const TimeSpan &rhs);
 bool operator>=(const TimeSpan &lhs, const TimeSpan &rhs);
 
+namespace literals {
+
+Time operator"" _d(unsigned long long days);
+Time operator"" _h(unsigned long long hours);
+Time operator"" _m(unsigned long long minutes);
+Time operator"" _s(unsigned long long seconds);
+
+} // namespace literals
+
 } // namespace times
