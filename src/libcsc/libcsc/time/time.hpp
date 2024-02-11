@@ -1,15 +1,20 @@
 #pragma once
 #include <iosfwd>
+#include <stdexcept>
 
 namespace times {
 
 class Time {
 private:
-  size_t seconds_;
+  long int seconds_;
 
 public:
-  Time(size_t seconds = 0) : seconds_(seconds) {}
-  size_t get_time() const { return seconds_; };
+  Time(long int seconds = 0) : seconds_(seconds) {
+    if (seconds < 0) {
+      throw std::runtime_error("Error! Time cannot be negative.");
+    }
+  }
+  long int get_time() const { return seconds_; };
 };
 
 class TimeSpan {
