@@ -36,43 +36,43 @@ std::ostream &operator<<(std::ostream &os, const Time &t) {
 }
 
 /* comparison operators for class Time */
-bool operator==(const Time &lhs, const Time &rhs) {
+bool operator==(const Time &lhs, const Time &rhs) noexcept {
   return lhs.get_time() == rhs.get_time();
 }
-bool operator!=(const Time &lhs, const Time &rhs) {
-  return lhs.get_time() != rhs.get_time();
-}
-bool operator<(const Time &lhs, const Time &rhs) {
+bool operator<(const Time &lhs, const Time &rhs) noexcept {
   return lhs.get_time() < rhs.get_time();
 }
-bool operator>(const Time &lhs, const Time &rhs) {
-  return lhs.get_time() > rhs.get_time();
+bool operator!=(const Time &lhs, const Time &rhs) noexcept {
+  return !(lhs == rhs);
 }
-bool operator<=(const Time &lhs, const Time &rhs) {
-  return lhs.get_time() <= rhs.get_time();
+bool operator>(const Time &lhs, const Time &rhs) noexcept {
+  return (rhs < lhs);
 }
-bool operator>=(const Time &lhs, const Time &rhs) {
-  return lhs.get_time() >= rhs.get_time();
+bool operator<=(const Time &lhs, const Time &rhs) noexcept {
+  return !(rhs < lhs);
+}
+bool operator>=(const Time &lhs, const Time &rhs) noexcept {
+  return !(lhs < rhs);
 }
 
 /* comparison operators for class TimeSpan */
-bool operator==(const TimeSpan &lhs, const TimeSpan &rhs) {
+bool operator==(const TimeSpan &lhs, const TimeSpan &rhs) noexcept {
   return lhs.get_spantime() == rhs.get_spantime();
 }
-bool operator!=(const TimeSpan &lhs, const TimeSpan &rhs) {
-  return lhs.get_spantime() != rhs.get_spantime();
-}
-bool operator<(const TimeSpan &lhs, const TimeSpan &rhs) {
+bool operator<(const TimeSpan &lhs, const TimeSpan &rhs) noexcept {
   return lhs.get_spantime() < rhs.get_spantime();
 }
-bool operator>(const TimeSpan &lhs, const TimeSpan &rhs) {
-  return lhs.get_spantime() > rhs.get_spantime();
+bool operator!=(const TimeSpan &lhs, const TimeSpan &rhs) noexcept {
+  return !(lhs == rhs);
 }
-bool operator<=(const TimeSpan &lhs, const TimeSpan &rhs) {
-  return lhs.get_spantime() <= rhs.get_spantime();
+bool operator>(const TimeSpan &lhs, const TimeSpan &rhs) noexcept {
+  return (rhs < lhs);
 }
-bool operator>=(const TimeSpan &lhs, const TimeSpan &rhs) {
-  return lhs.get_spantime() >= rhs.get_spantime();
+bool operator<=(const TimeSpan &lhs, const TimeSpan &rhs) noexcept {
+  return !(rhs < lhs);
+}
+bool operator>=(const TimeSpan &lhs, const TimeSpan &rhs) noexcept {
+  return !(lhs < rhs);
 }
 
 namespace literals {

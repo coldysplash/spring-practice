@@ -35,19 +35,19 @@ TimeSpan operator-(const Time &lhs, const Time &rhs);
 
 std::ostream &operator<<(std::ostream &os, const Time &t);
 
-bool operator==(const Time &lhs, const Time &rhs);
-bool operator!=(const Time &lhs, const Time &rhs);
-bool operator<(const Time &lhs, const Time &rhs);
-bool operator>(const Time &lhs, const Time &rhs);
-bool operator<=(const Time &lhs, const Time &rhs);
-bool operator>=(const Time &lhs, const Time &rhs);
+bool operator==(const Time &lhs, const Time &rhs) noexcept;
+bool operator!=(const Time &lhs, const Time &rhs) noexcept;
+bool operator<(const Time &lhs, const Time &rhs) noexcept;
+bool operator>(const Time &lhs, const Time &rhs) noexcept;
+bool operator<=(const Time &lhs, const Time &rhs) noexcept;
+bool operator>=(const Time &lhs, const Time &rhs) noexcept;
 
-bool operator==(const TimeSpan &lhs, const TimeSpan &rhs);
-bool operator!=(const TimeSpan &lhs, const TimeSpan &rhs);
-bool operator<(const TimeSpan &lhs, const TimeSpan &rhs);
-bool operator>(const TimeSpan &lhs, const TimeSpan &rhs);
-bool operator<=(const TimeSpan &lhs, const TimeSpan &rhs);
-bool operator>=(const TimeSpan &lhs, const TimeSpan &rhs);
+bool operator==(const TimeSpan &lhs, const TimeSpan &rhs) noexcept;
+bool operator!=(const TimeSpan &lhs, const TimeSpan &rhs) noexcept;
+bool operator<(const TimeSpan &lhs, const TimeSpan &rhs) noexcept;
+bool operator>(const TimeSpan &lhs, const TimeSpan &rhs) noexcept;
+bool operator<=(const TimeSpan &lhs, const TimeSpan &rhs) noexcept;
+bool operator>=(const TimeSpan &lhs, const TimeSpan &rhs) noexcept;
 
 namespace literals {
 
