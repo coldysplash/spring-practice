@@ -85,7 +85,7 @@ uint32_t soundex_hash(std::string_view str) {
 std::string hash_ui32_to_str(uint32_t hash) {
   std::string str_hash;
   for (int i = 3; i != -1; --i) {
-    const u_char one_ch = hash >> static_cast<uint>(i * 8);
+    const unsigned char one_ch = hash >> static_cast<unsigned int>(i * 8);
     str_hash += static_cast<char>(one_ch);
   }
   return str_hash;
@@ -94,9 +94,9 @@ std::string hash_ui32_to_str(uint32_t hash) {
 uint32_t hash_str_to_ui32t(const std::string &hash_str) {
   uint32_t hash = 0;
   for (size_t i = 0; i < 4; ++i) {
-    hash |= static_cast<u_char>(hash_str[i]);
+    hash |= static_cast<unsigned char>(hash_str[i]);
     if (i < 3) {
-      hash <<= static_cast<uint>(8);
+      hash <<= static_cast<unsigned int>(8);
     }
   }
   return hash;
