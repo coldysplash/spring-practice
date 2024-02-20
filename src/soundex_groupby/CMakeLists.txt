@@ -1,4 +1,5 @@
-set(target_name app)
+set(target_name soundex_groupby)
+set(JSON_BuildTests OFF CACHE INTERNAL "")
 
 add_executable(${target_name})
 
@@ -8,11 +9,12 @@ set_compile_options(${target_name})
 target_sources(
   ${target_name}
   PRIVATE
-    app/main.cpp
+    soundex_groupby/main.cpp
 )
 
 target_link_libraries(
   ${target_name}
   PRIVATE
-    time
+    soundex
+    nlohmann_json::nlohmann_json
 )

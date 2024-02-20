@@ -13,3 +13,16 @@ target_include_directories(
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}
 )
+
+add_library(soundex STATIC 
+    libcsc/soundex/soundex.cpp
+    libcsc/soundex/soundex.hpp
+)
+
+set_compile_options(soundex)
+
+target_include_directories(
+    soundex
+    PUBLIC
+        ${CMAKE_CURRENT_LIST_DIR}
+)

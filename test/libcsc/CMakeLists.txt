@@ -11,3 +11,16 @@ target_link_libraries(
 
 include(GoogleTest)
 gtest_discover_tests(time_test)
+
+add_executable(
+  soundex_test
+  libcsc/soundex.cpp
+)
+
+target_link_libraries(
+  soundex_test
+  GTest::gtest_main
+  soundex
+)
+
+gtest_discover_tests(soundex_test)

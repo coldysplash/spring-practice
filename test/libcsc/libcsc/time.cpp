@@ -2,8 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include <string>
-
 TEST(arithmetic_operators_Time, time_test) {
   const times::Time t_1 = 500;
   const times::TimeSpan t_2 = 300;
