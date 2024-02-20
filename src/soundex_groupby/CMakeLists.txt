@@ -1,4 +1,5 @@
 set(target_name soundex_groupby)
+set(JSON_BuildTests OFF CACHE INTERNAL "")
 
 add_executable(${target_name})
 
@@ -15,4 +16,5 @@ target_link_libraries(
   ${target_name}
   PRIVATE
     soundex
+    nlohmann_json::nlohmann_json
 )

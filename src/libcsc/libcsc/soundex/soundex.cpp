@@ -1,7 +1,6 @@
 #include <libcsc/soundex/soundex.hpp>
 
 #include <algorithm>
-#include <bitset>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
