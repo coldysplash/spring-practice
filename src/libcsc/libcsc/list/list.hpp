@@ -63,8 +63,8 @@ public:
   using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
   List() = default;
-  // List(Iterator begin, Iterator end);
   List(const std::initializer_list<T> &init_list);
+  List(iterator begin, iterator end);
   // List(const List &copy_list);
   // List(List &&move_copy_list);
   // List operator=(const List &copy_list);
@@ -77,17 +77,22 @@ public:
   // T &front();
   // T &back();
 
+  size_t size() const noexcept { return size_; }
   void push_back(T value);
   void clear();
 };
 
 /* constructor with initializer_list */
-template <typename T>
-List<T>::List(const std::initializer_list<T> &init_list)
-    : size_(init_list.size()) {
-
+template <typename T> List<T>::List(const std::initializer_list<T> &init_list) {
   for (const auto &item : init_list) {
     push_back(item);
+  }
+}
+
+/* constructor with iterators */
+template <typename T> List<T>::List(iterator begin, iterator end) {
+  for (auto it = begin; it != end; it++) {
+    push_back(*it);
   }
 }
 
@@ -96,9 +101,24 @@ template <typename T> void List<T>::push_back(T value) {
     head_ = tail_ = new Node<T>(value);
     head_->prev_ = nullptr;
     tail_->next_ = nullptr;
+    ++size_;
   } else {
     tail_->next_ = new Node<T>(value);
     tail_ = tail_->next_;
+    ++size_;
+  }
+}
+
+template <typename T>
+bool operator==(const List<T> &lhs, const List<T> &rhs) noexcept {
+  auto first1 = lhs.begin();
+  auto first2 = rhs.begin();
+  auto last1 = lhs.end();
+  for (; first1 != last1; ++first1, ++first2) {
+    if (!(*first1 == *first2)) {
+      return false;
+    }
+    return true;
   }
 }
 
