@@ -1,4 +1,6 @@
-#include <iostream>
+#pragma once
+
+#include <iterator>
 #include <utility>
 
 template <typename T> struct Node {
@@ -18,7 +20,49 @@ private:
   size_t size_ = 0;
 
 public:
-  List();
+  // Iterator
+  template <typename U> class Iterator {
+  public:
+    explicit Iterator(Node<T> *node) : node_(node) {}
+    auto &operator++() noexcept {
+      node_ = node_->next_;
+      return *this;
+    }
+    auto operator++(int) noexcept {
+      auto temp = *this;
+      ++(*this);
+      return temp;
+    }
+    auto &operator--() noexcept {
+      node_ = node_->next_;
+      return *this;
+    }
+    auto operator--(int) noexcept {
+      auto temp = *this;
+      --(*this);
+      return temp;
+    }
+
+    T &operator*() const noexcept { return node_->value_; }
+    T *operator->() const noexcept { return &node_->value; }
+
+    friend bool operator==(const Iterator<U> &lhs, const Iterator<U> &rhs) {
+      return lhs.node_ == rhs.node_;
+    }
+    friend bool operator!=(const Iterator<U> &lhs, const Iterator<U> &rhs) {
+      return !(lhs == rhs);
+    }
+
+  private:
+    Node<T> *node_;
+  };
+
+  using iterator = Iterator<T>;
+  using const_iterator = Iterator<const T>;
+  using reverse_iterator = std::reverse_iterator<iterator>;
+  using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+
+  List() = default;
   // List(Iterator begin, Iterator end);
   List(const std::initializer_list<T> &init_list);
   // List(const List &copy_list);
@@ -27,34 +71,43 @@ public:
   // List operator=(List &&move_copy_list);
   ~List();
 
+  iterator begin() const noexcept { return iterator(head_); }
+  iterator end() const noexcept { return iterator(tail_->next_); }
+
+  // T &front();
+  // T &back();
+
+  void push_back(T value);
   void clear();
 };
 
-template <typename T>
-List<T>::List() : head_(nullptr), tail_(nullptr), size_(0) {}
-
+/* constructor with initializer_list */
 template <typename T>
 List<T>::List(const std::initializer_list<T> &init_list)
-    : head_(nullptr), tail_(nullptr), size_(init_list.size()) {
+    : size_(init_list.size()) {
 
-  if (init_list.size() != 0) {
-    Node<T> *new_node = new Node(*init_list.begin());
-    head_ = tail_ = new_node;
+  for (const auto &item : init_list) {
+    push_back(item);
+  }
+}
 
-    for (auto it = init_list.begin() + 1; it != init_list.end(); it++) {
-      Node<T> *prev_node = new_node;
-      new_node = new Node<T>(*it);
-      tail_->next_ = new_node;
-      tail_->prev_ = prev_node;
-      tail_ = new_node;
-    }
+template <typename T> void List<T>::push_back(T value) {
+  if (head_ == nullptr) {
+    head_ = tail_ = new Node<T>(value);
+    head_->prev_ = nullptr;
+    tail_->next_ = nullptr;
+  } else {
+    tail_->next_ = new Node<T>(value);
+    tail_ = tail_->next_;
   }
 }
 
 template <typename T> void List<T>::clear() {
   while (head_ != nullptr) {
-    Node<T> *deletable = std::exchange(head_, head_->next_);
+    delete std::exchange(head_, head_->next_);
   }
+  head_ = tail_ = nullptr;
+  size_ = 0;
 }
 
 template <typename T> List<T>::~List() { clear(); }
