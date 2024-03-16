@@ -73,12 +73,24 @@ public:
 
   iterator begin() const noexcept { return iterator(head_); }
   iterator end() const noexcept { return iterator(tail_->next_); }
+  const_iterator cbegin() const noexcept { return const_iterator(head_); }
+  const_iterator cend() const noexcept { return const_iterator(tail_->next_); }
+  reverse_iterator rbegin() const noexcept { return reverse_iterator(end()); }
+  reverse_iterator rend() const noexcept { return reverse_iterator(begin()); }
+  const_reverse_iterator crbegin() const noexcept {
+    return const_reverse_iterator(cend());
+  }
+  const_reverse_iterator crend() const noexcept {
+    return const_reverse_iterator(cbegin());
+  }
 
-  // T &front();
-  // T &back();
+  T &front();
+  T &back();
+  void push_back(T value);
+  void push_front(T value);
 
   size_t size() const noexcept { return size_; }
-  void push_back(T value);
+  bool empty() const noexcept;
   void clear();
 };
 
@@ -96,17 +108,34 @@ template <typename T> List<T>::List(iterator begin, iterator end) {
   }
 }
 
+template <typename T> T &List<T>::front() { return head_->value_; }
+template <typename T> T &List<T>::back() { return tail_->value_; }
+
 template <typename T> void List<T>::push_back(T value) {
   if (head_ == nullptr) {
     head_ = tail_ = new Node<T>(value);
-    head_->prev_ = nullptr;
-    tail_->next_ = nullptr;
     ++size_;
   } else {
     tail_->next_ = new Node<T>(value);
     tail_ = tail_->next_;
     ++size_;
   }
+}
+
+template <typename T> void List<T>::push_front(T value) {
+  if (head_ == nullptr) {
+    head_ = tail_ = new Node<T>(value);
+    ++size_;
+  } else {
+    auto new_node = new Node<T>(value);
+    head_->prev_ = new_node;
+    head_ = new_node;
+    ++size_;
+  }
+}
+
+template <typename T> bool List<T>::empty() const noexcept {
+  return (head_ == nullptr);
 }
 
 template <typename T>
