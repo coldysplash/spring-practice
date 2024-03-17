@@ -62,15 +62,6 @@ public:
   using reverse_iterator = std::reverse_iterator<iterator>;
   using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-  List() = default;
-  List(const std::initializer_list<T> &init_list);
-  List(iterator begin, iterator end);
-  // List(const List &copy_list);
-  // List(List &&move_copy_list);
-  // List operator=(const List &copy_list);
-  // List operator=(List &&move_copy_list);
-  ~List();
-
   iterator begin() const noexcept { return iterator(head_); }
   iterator end() const noexcept { return iterator(tail_->next_); }
   const_iterator cbegin() const noexcept { return const_iterator(head_); }
@@ -84,32 +75,70 @@ public:
     return const_reverse_iterator(cbegin());
   }
 
-  T &front();
-  T &back();
+  /* default constructor */
+  List() = default;
+
+  /* constructor with initializer_list */
+  List(const std::initializer_list<T> &init_list) {
+    for (const auto &item : init_list) {
+      push_back(item);
+    }
+  }
+
+  /* constructor with iterators */
+  List(iterator begin, iterator end) {
+    for (auto it = begin; it != end; it++) {
+      push_back(*it);
+    }
+  }
+
+  /* Copy constructor */
+  List(const List &other_list) {
+    for (const auto &item : other_list) {
+      push_back(item);
+    }
+  }
+
+  /* Move constructor */
+  List(List &&other_list) {
+    std::swap(head_, other_list.head_);
+    std::swap(tail_, other_list.tail_);
+    std::swap(size_, other_list.size_);
+    other_list.head_ = other_list.tail_ = nullptr;
+    other_list.size_ = 0;
+  }
+
+  /* Copy assignment operator */
+  List &operator=(const List &other_list) {
+    if (this != other_list) {
+      for (const auto &item : other_list) {
+        push_back(item);
+      }
+    }
+    return *this;
+  }
+  /* Move assignment operator */
+  List &operator=(List &&other_list) {
+    if (this != other_list) {
+      std::swap(head_, other_list.head_);
+      std::swap(tail_, other_list.tail_);
+      std::swap(size_, other_list.size_);
+    }
+    return *this;
+  };
+
+  /* Destructor */
+  ~List() { clear(); }
+
+  T &front() { return head_->value_; }
+  T &back() { return tail_->value_; }
   void push_back(T value);
   void push_front(T value);
 
   size_t size() const noexcept { return size_; }
   bool empty() const noexcept;
-  void clear();
+  void clear() noexcept;
 };
-
-/* constructor with initializer_list */
-template <typename T> List<T>::List(const std::initializer_list<T> &init_list) {
-  for (const auto &item : init_list) {
-    push_back(item);
-  }
-}
-
-/* constructor with iterators */
-template <typename T> List<T>::List(iterator begin, iterator end) {
-  for (auto it = begin; it != end; it++) {
-    push_back(*it);
-  }
-}
-
-template <typename T> T &List<T>::front() { return head_->value_; }
-template <typename T> T &List<T>::back() { return tail_->value_; }
 
 template <typename T> void List<T>::push_back(T value) {
   if (head_ == nullptr) {
@@ -127,9 +156,11 @@ template <typename T> void List<T>::push_front(T value) {
     head_ = tail_ = new Node<T>(value);
     ++size_;
   } else {
-    auto new_node = new Node<T>(value);
-    head_->prev_ = new_node;
+    Node<T> *new_node = new Node<T>(value);
+    Node<T> *temp = head_;
     head_ = new_node;
+    head_->next_ = temp;
+    temp->prev_ = head_;
     ++size_;
   }
 }
@@ -151,14 +182,17 @@ bool operator==(const List<T> &lhs, const List<T> &rhs) noexcept {
   }
 }
 
-template <typename T> void List<T>::clear() {
+template <typename T>
+bool operator!=(const List<T> &lhs, const List<T> &rhs) noexcept {
+  return !(lhs == rhs);
+}
+
+template <typename T> void List<T>::clear() noexcept {
   while (head_ != nullptr) {
     delete std::exchange(head_, head_->next_);
   }
   head_ = tail_ = nullptr;
   size_ = 0;
 }
-
-template <typename T> List<T>::~List() { clear(); }
 
 } // namespace list

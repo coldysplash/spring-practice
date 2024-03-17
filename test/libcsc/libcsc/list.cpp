@@ -2,8 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include <vector>
-
+/* test iterator and constructor begin end */
 TEST(list_test, iterator_test) {
 
   list::List<int> eq_list{1, 2, 3, 4};
@@ -23,6 +22,7 @@ TEST(list_test, front_back_test) {
   ASSERT_EQ(eq_list.back(), 4);
 }
 
+/* test push_back and push_front */
 TEST(list_test, push_test) {
   {
     list::List<int> eq_list{1, 2, 3};
@@ -38,6 +38,7 @@ TEST(list_test, push_test) {
   }
 }
 
+/* test empty and size */
 TEST(list_test, empty_size_test) {
   list::List<int> eq_list{1, 2, 3};
   ASSERT_EQ(eq_list.empty(), false);
@@ -45,6 +46,42 @@ TEST(list_test, empty_size_test) {
   ASSERT_EQ(eq_list_1.empty(), true);
   ASSERT_EQ(eq_list.size(), 3);
   ASSERT_EQ(eq_list_1.size(), 0);
+}
+
+/* test Copy constructor */
+TEST(list_test, copy_constructor_test) {
+
+  list::List<char> eq_list{'a', 'b', 'c', 'd'};
+  list::List<char> copy_list(eq_list);
+
+  ASSERT_EQ(eq_list, copy_list);
+}
+
+/* test Move constructor */
+TEST(list_test, move_constructor_test) {
+
+  list::List<int> eq_list{1, 2, 3};
+  list::List<int> move_list(std::move(eq_list));
+
+  ASSERT_EQ((list::List<int>{1, 2, 3}), move_list);
+}
+
+/* test Copy assignment operator */
+TEST(list_test, copy_assignment_test) {
+
+  list::List<char> eq_list{'a', 'b', 'c', 'd'};
+  list::List<char> copy_list = eq_list;
+
+  ASSERT_EQ(eq_list, copy_list);
+}
+
+/* test Move assignment operator */
+TEST(list_test, move_assignment_test) {
+
+  list::List<int> eq_list{1, 2, 3};
+  list::List<int> move_list = std::move(eq_list);
+
+  ASSERT_EQ((list::List<int>{1, 2, 3}), move_list);
 }
 
 int main(int argc, char **argv) {
