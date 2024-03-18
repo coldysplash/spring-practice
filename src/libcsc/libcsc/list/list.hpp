@@ -132,42 +132,49 @@ public:
 
   T &front() { return head_->value_; }
   T &back() { return tail_->value_; }
-  void push_back(T value);
-  void push_front(T value);
 
+  /* push_back */
+  void push_back(T value) {
+    if (head_ == nullptr) {
+      head_ = tail_ = new Node<T>(value);
+      ++size_;
+    } else {
+      tail_->next_ = new Node<T>(value);
+      tail_ = tail_->next_;
+      ++size_;
+    }
+  }
+
+  /* push_front */
+  void push_front(T value) {
+    if (head_ == nullptr) {
+      head_ = tail_ = new Node<T>(value);
+      ++size_;
+    } else {
+      Node<T> *new_node = new Node<T>(value);
+      Node<T> *temp = head_;
+      head_ = new_node;
+      head_->next_ = temp;
+      temp->prev_ = head_;
+      ++size_;
+    }
+  }
+
+  /* size */
   size_t size() const noexcept { return size_; }
-  bool empty() const noexcept;
-  void clear() noexcept;
+
+  /* empty */
+  bool empty() const noexcept { return (head_ == nullptr); }
+
+  /* clear */
+  void clear() noexcept {
+    while (head_ != nullptr) {
+      delete std::exchange(head_, head_->next_);
+    }
+    head_ = tail_ = nullptr;
+    size_ = 0;
+  }
 };
-
-template <typename T> void List<T>::push_back(T value) {
-  if (head_ == nullptr) {
-    head_ = tail_ = new Node<T>(value);
-    ++size_;
-  } else {
-    tail_->next_ = new Node<T>(value);
-    tail_ = tail_->next_;
-    ++size_;
-  }
-}
-
-template <typename T> void List<T>::push_front(T value) {
-  if (head_ == nullptr) {
-    head_ = tail_ = new Node<T>(value);
-    ++size_;
-  } else {
-    Node<T> *new_node = new Node<T>(value);
-    Node<T> *temp = head_;
-    head_ = new_node;
-    head_->next_ = temp;
-    temp->prev_ = head_;
-    ++size_;
-  }
-}
-
-template <typename T> bool List<T>::empty() const noexcept {
-  return (head_ == nullptr);
-}
 
 template <typename T>
 bool operator==(const List<T> &lhs, const List<T> &rhs) noexcept {
@@ -185,14 +192,6 @@ bool operator==(const List<T> &lhs, const List<T> &rhs) noexcept {
 template <typename T>
 bool operator!=(const List<T> &lhs, const List<T> &rhs) noexcept {
   return !(lhs == rhs);
-}
-
-template <typename T> void List<T>::clear() noexcept {
-  while (head_ != nullptr) {
-    delete std::exchange(head_, head_->next_);
-  }
-  head_ = tail_ = nullptr;
-  size_ = 0;
 }
 
 } // namespace list
