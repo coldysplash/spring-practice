@@ -119,11 +119,16 @@ public:
   }
   /* Move assignment operator */
   List &operator=(List &&other_list) {
-    if (this != other_list) {
-      std::swap(head_, other_list.head_);
-      std::swap(tail_, other_list.tail_);
-      std::swap(size_, other_list.size_);
+    if (this == &other_list) {
+      return *this;
     }
+    std::swap(head_, other_list.head_);
+    std::swap(tail_, other_list.tail_);
+    std::swap(size_, other_list.size_);
+
+    other_list.head_ = other_list.tail_ = nullptr;
+    other_list.size_ = 0;
+
     return *this;
   };
 
