@@ -35,4 +35,10 @@ target_link_libraries(
   GTest::gtest_main
 )
 
+target_include_directories(
+  list_test
+  PUBLIC 
+  ${CMAKE_SOURCE_DIR}/src/libcsc/
+)
+
 gtest_discover_tests(list_test)
