@@ -1,6 +1,8 @@
-#include <../../../src/libcsc/libcsc/list/list.hpp>
+#include <libcsc/list/list.hpp>
 
 #include <gtest/gtest.h>
+
+#include <algorithm>
 
 /* test iterator and constructor begin end */
 TEST(list_test, iterator_test) {
@@ -82,6 +84,24 @@ TEST(list_test, move_assignment_test) {
   list::List<int> move_list = std::move(eq_list);
 
   ASSERT_EQ((list::List<int>{1, 2, 3}), move_list);
+}
+
+/* test my list with stl methods */
+TEST(list_test, list_stl_test) {
+  /* std::find */
+  {
+    list::List<int> eq_list{1, 2, 3};
+    list::List<int>::iterator it = std::find(eq_list.begin(), eq_list.end(), 2);
+
+    ASSERT_EQ(*it, 2);
+  }
+  /* std::reverse */
+  {
+    list::List<int> eq_list{1, 2, 3};
+    std::reverse(eq_list.begin(), eq_list.end());
+
+    ASSERT_EQ(eq_list, (list::List<int>{3, 2, 1}));
+  }
 }
 
 int main(int argc, char **argv) {

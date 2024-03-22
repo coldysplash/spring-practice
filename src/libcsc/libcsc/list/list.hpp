@@ -9,6 +9,8 @@ template <typename T> struct Node {
   Node<T> *prev_ = nullptr;
 
   Node(const T &item) : value_(item) {}
+  Node(const T &item, Node<T> *next, Node<T> *prev)
+      : value_(item), next_(next), prev_(prev) {}
 };
 
 namespace list {
@@ -23,6 +25,12 @@ public:
   // Iterator
   template <typename U> class Iterator {
   public:
+    using difference_type = std::ptrdiff_t;
+    using value_type = U;
+    using reference = U &;
+    using pointer = U *;
+    using iterator_category = std::bidirectional_iterator_tag;
+
     explicit Iterator(Node<T> *node) : node_(node) {}
     auto &operator++() noexcept {
       node_ = node_->next_;
@@ -34,7 +42,7 @@ public:
       return temp;
     }
     auto &operator--() noexcept {
-      node_ = node_->next_;
+      node_ = node_->prev_;
       return *this;
     }
     auto operator--(int) noexcept {
@@ -43,8 +51,8 @@ public:
       return temp;
     }
 
-    T &operator*() const noexcept { return node_->value_; }
-    T *operator->() const noexcept { return &node_->value; }
+    reference operator*() const noexcept { return node_->value_; }
+    pointer operator->() const noexcept { return &node_->value; }
 
     friend bool operator==(const Iterator<U> &lhs, const Iterator<U> &rhs) {
       return lhs.node_ == rhs.node_;
@@ -142,27 +150,28 @@ public:
   void push_back(T value) {
     if (head_ == nullptr) {
       head_ = tail_ = new Node<T>(value);
-      ++size_;
+      tail_->next_ = new Node<T>(T(), nullptr, tail_);
     } else {
-      tail_->next_ = new Node<T>(value);
       tail_ = tail_->next_;
-      ++size_;
+      tail_->value_ = value;
+      tail_->next_ = new Node<T>(T(), nullptr, tail_);
     }
+    ++size_;
   }
 
   /* push_front */
   void push_front(T value) {
     if (head_ == nullptr) {
       head_ = tail_ = new Node<T>(value);
-      ++size_;
+      tail_->next_ = new Node<T>(T(), nullptr, tail_);
     } else {
       Node<T> *new_node = new Node<T>(value);
       Node<T> *temp = head_;
       head_ = new_node;
       head_->next_ = temp;
       temp->prev_ = head_;
-      ++size_;
     }
+    ++size_;
   }
 
   /* size */
@@ -190,8 +199,8 @@ bool operator==(const List<T> &lhs, const List<T> &rhs) noexcept {
     if (!(*first1 == *first2)) {
       return false;
     }
-    return true;
   }
+  return true;
 }
 
 template <typename T>
