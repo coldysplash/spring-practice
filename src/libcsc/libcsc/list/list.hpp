@@ -192,15 +192,7 @@ public:
 
 template <typename T>
 bool operator==(const List<T> &lhs, const List<T> &rhs) noexcept {
-  auto first1 = lhs.begin();
-  auto first2 = rhs.begin();
-  auto last1 = lhs.end();
-  for (; first1 != last1; ++first1, ++first2) {
-    if (!(*first1 == *first2)) {
-      return false;
-    }
-  }
-  return true;
+  return std::equal(lhs.begin(), lhs.end(), rhs.begin());
 }
 
 template <typename T>
