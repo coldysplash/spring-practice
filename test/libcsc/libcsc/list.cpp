@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include <algorithm>
+#include <list>
 
 /* test iterator and constructor begin end */
 TEST(list_test, iterator_test) {
@@ -70,11 +71,20 @@ TEST(list_test, move_constructor_test) {
 
 /* test Copy assignment operator */
 TEST(list_test, copy_assignment_test) {
+  {
+    list::List<char> eq_list{'a', 'b', 'c', 'd'};
+    list::List<char> copy_list{'a', 'b', 'c'};
+    copy_list = eq_list;
 
-  list::List<char> eq_list{'a', 'b', 'c', 'd'};
-  list::List<char> copy_list = eq_list;
+    ASSERT_EQ(eq_list, copy_list);
+  }
+  {
+    list::List<char> eq_list{'a', 'b', 'c'};
+    list::List<char> copy_list{'a', 'b', 'c'};
+    copy_list = eq_list;
 
-  ASSERT_EQ(eq_list, copy_list);
+    ASSERT_EQ(eq_list, copy_list);
+  }
 }
 
 /* test Move assignment operator */

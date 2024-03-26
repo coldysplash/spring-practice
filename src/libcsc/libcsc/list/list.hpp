@@ -70,12 +70,14 @@ public:
   using reverse_iterator = std::reverse_iterator<iterator>;
   using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-  iterator begin() const noexcept { return iterator(head_); }
-  iterator end() const noexcept { return iterator(tail_->next_); }
+  iterator begin() noexcept { return iterator(head_); }
+  iterator end() noexcept { return iterator(tail_->next_); }
+  const_iterator begin() const noexcept { return const_iterator(head_); }
+  const_iterator end() const noexcept { return const_iterator(tail_->next_); }
   const_iterator cbegin() const noexcept { return const_iterator(head_); }
   const_iterator cend() const noexcept { return const_iterator(tail_->next_); }
-  reverse_iterator rbegin() const noexcept { return reverse_iterator(end()); }
-  reverse_iterator rend() const noexcept { return reverse_iterator(begin()); }
+  reverse_iterator rbegin() noexcept { return reverse_iterator(end()); }
+  reverse_iterator rend() noexcept { return reverse_iterator(begin()); }
   const_reverse_iterator crbegin() const noexcept {
     return const_reverse_iterator(cend());
   }
@@ -112,31 +114,26 @@ public:
     std::swap(head_, other_list.head_);
     std::swap(tail_, other_list.tail_);
     std::swap(size_, other_list.size_);
-    other_list.head_ = other_list.tail_ = nullptr;
-    other_list.size_ = 0;
   }
 
   /* Copy assignment operator */
   List &operator=(const List &other_list) {
-    if (this != other_list) {
+    if (this != &other_list) {
+      clear();
       for (const auto &item : other_list) {
         push_back(item);
       }
     }
     return *this;
   }
+
   /* Move assignment operator */
   List &operator=(List &&other_list) {
-    if (this == &other_list) {
-      return *this;
+    if (this != &other_list) {
+      std::swap(head_, other_list.head_);
+      std::swap(tail_, other_list.tail_);
+      std::swap(size_, other_list.size_);
     }
-    std::swap(head_, other_list.head_);
-    std::swap(tail_, other_list.tail_);
-    std::swap(size_, other_list.size_);
-
-    other_list.head_ = other_list.tail_ = nullptr;
-    other_list.size_ = 0;
-
     return *this;
   };
 
