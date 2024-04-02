@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-namespace soundex {
+namespace {
 
 void replace_consonants_to_digit(std::string &hash_str) {
   const std::unordered_map<char, char> consonants_digit = {
@@ -58,6 +58,10 @@ void remove_duplicate_digits(std::string &hash_str) {
           }),
       hash_str.end());
 }
+
+} // namespace
+
+namespace soundex {
 
 uint32_t soundex_hash(std::string_view str) {
   const char first_ch = str.at(0);

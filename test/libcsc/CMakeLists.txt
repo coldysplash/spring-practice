@@ -24,3 +24,21 @@ target_link_libraries(
 )
 
 gtest_discover_tests(soundex_test)
+
+add_executable(
+  list_test
+  libcsc/list.cpp
+)
+
+target_link_libraries(
+  list_test
+  GTest::gtest_main
+)
+
+target_include_directories(
+  list_test
+  PUBLIC 
+  ${CMAKE_SOURCE_DIR}/src/libcsc/
+)
+
+gtest_discover_tests(list_test)
